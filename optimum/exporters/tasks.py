@@ -212,6 +212,7 @@ class TasksManager:
             "image-segmentation": ("AutoModelForImageSegmentation", "AutoModelForSemanticSegmentation"),
             "image-to-image": "AutoModelForImageToImage",
             "image-to-text": "AutoModelForVision2Seq",
+            "image-text-to-text": "AutoModelForImageTextToText",
             "mask-generation": "AutoModel",
             "masked-im": "AutoModelForMaskedImageModeling",
             "multiple-choice": "AutoModelForMultipleChoice",
@@ -497,6 +498,11 @@ class TasksManager:
             "text-generation",
             "text-generation-with-past",
             onnx="CodeGenOnnxConfig",
+        ),
+        "cohere": supported_tasks_mapping(
+            "text-generation",
+            "text-generation-with-past",
+            onnx="CohereOnnxConfig",
         ),
         "convbert": supported_tasks_mapping(
             "feature-extraction",
