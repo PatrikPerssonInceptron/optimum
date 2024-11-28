@@ -233,6 +233,7 @@ class NormalizedConfigManager:
         "falcon": NormalizedTextConfig,
         "camembert": NormalizedTextConfig,
         "codegen": GPT2LikeNormalizedTextConfig,
+        "cohere": GPTBigCodeNormalizedTextConfig,
         "cvt": NormalizedVisionConfig,
         "deberta": NormalizedTextConfig,
         "deberta-v2": NormalizedTextConfig,

@@ -511,6 +511,11 @@ class TasksManager:
             "text-generation-with-past",
             onnx="CodeGenOnnxConfig",
         ),
+        "cohere": supported_tasks_mapping(
+            "text-generation",
+            "text-generation-with-past",
+            onnx="CohereOnnxConfig",
+        ),
         "convbert": supported_tasks_mapping(
             "feature-extraction",
             "fill-mask",

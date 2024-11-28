@@ -451,6 +451,20 @@ class GPTBigCodeOnnxConfig(TextDecoderWithPositionIdsOnnxConfig):
         flattened_output[f"{name}.{idx}.key_value"] = t
 
 
+class CohereOnnxConfig(GPTBigCodeOnnxConfig):
+    NORMALIZED_CONFIG_CLASS = NormalizedTextConfig
+    ATOL_FOR_VALIDATION = 1e-4
+
+    @property
+    def inputs(self) -> Dict[str, Dict[int, str]]:
+        dynamic_axis = {0: "batch_size", 1: "sequence_length"}
+        return {
+            "input_ids": dynamic_axis,
+            "attention_mask": dynamic_axis,
+            "position_ids": dynamic_axis,
+        }
+
+
 class FalconOnnxConfig(TextDecoderOnnxConfig):
     # This is due to the cache refactoring for Falcon in 4.36
     MIN_TRANSFORMERS_VERSION = version.parse("4.35.99")
