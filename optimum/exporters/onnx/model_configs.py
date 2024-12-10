@@ -320,6 +320,13 @@ class LlamaOnnxConfig(TextDecoderWithPositionIdsOnnxConfig):
     NORMALIZED_CONFIG_CLASS = NormalizedTextConfig
 
 
+class CohereOnnxConfig(TextDecoderWithPositionIdsOnnxConfig):
+    DEFAULT_ONNX_OPSET = 14  # Llama now uses F.scaled_dot_product_attention by default for torch>=2.1.1.
+
+    DUMMY_INPUT_GENERATOR_CLASSES = (DummyTextInputGenerator, MistralDummyPastKeyValuesGenerator)
+    DUMMY_PKV_GENERATOR_CLASS = MistralDummyPastKeyValuesGenerator
+    NORMALIZED_CONFIG_CLASS = NormalizedTextConfig
+
 class Qwen2OnnxConfig(LlamaOnnxConfig):
     MIN_TRANSFORMERS_VERSION = version.parse("4.37.0")
 
@@ -450,19 +457,19 @@ class GPTBigCodeOnnxConfig(TextDecoderWithPositionIdsOnnxConfig):
     def flatten_past_key_values(self, flattened_output, name, idx, t):
         flattened_output[f"{name}.{idx}.key_value"] = t
 
-
-class CohereOnnxConfig(GPTBigCodeOnnxConfig):
+"""
+class CohereOnnxConfig(LlamaOnnxConfig):
     NORMALIZED_CONFIG_CLASS = NormalizedTextConfig
     ATOL_FOR_VALIDATION = 1e-4
-
-    @property
-    def inputs(self) -> Dict[str, Dict[int, str]]:
-        dynamic_axis = {0: "batch_size", 1: "sequence_length"}
-        return {
-            "input_ids": dynamic_axis,
-            "attention_mask": dynamic_axis,
-            "position_ids": dynamic_axis,
-        }
+"""
+"""@property
+def inputs(self) -> Dict[str, Dict[int, str]]:
+    dynamic_axis = {0: "batch_size", 1: "sequence_length"}
+    return {
+        "input_ids": dynamic_axis,
+        "attention_mask": dynamic_axis,
+        "position_ids": dynamic_axis,
+    }"""
 
 
 class FalconOnnxConfig(TextDecoderOnnxConfig):
